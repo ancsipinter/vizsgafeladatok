@@ -1,0 +1,52 @@
+npm install -g @angular/cli
+ng new vizsga
+cd vizsga
+ng generate component feladat
+npm install bootstrap
+
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+],
+
+<div class="container mt-4">
+    <input type="number" class="form-control mb-3" [(ngModel)]="inputValue" (ngModelChange)="evaluatePrime()">
+    <button class="btn btn-primary mb-3" (click)="EredmenyMentes()">Mentés</button>
+    <p>Az input értéke: {{ inputValue }}</p>
+    <p *ngIf="isPrime !== null">Az input értéke prímszám: {{ isPrime ? 'igen' : 'nem' }}</p>
+  </div>
+
+  import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-feladat',
+  templateUrl: './feladat.component.html',
+  styleUrls: ['./feladat.component.css']
+})
+export class FeladatComponent {
+  inputValue: number = 0;
+  isPrime: boolean | null = null;
+  logs: string[] = [];
+
+  EredmenyMentes() {
+    this.logs.push(`Az input értéke: ${this.inputValue}, Prímszám: ${this.isPrime ? 'Igen' : 'Nem'}`);
+  }
+
+  evaluatePrime() {
+    if (this.inputValue <= 1) {
+      this.isPrime = false;
+      return;
+    }
+    for (let i = 2; i <= Math.sqrt(this.inputValue); i++) {
+      if (this.inputValue % i === 0) {
+        this.isPrime = false;
+        return;
+      }
+    }
+    this.isPrime = true;
+  }
+}
+
+
+<router-outlet></router-outlet>
+
